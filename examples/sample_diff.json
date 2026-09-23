@@ -1,0 +1,4 @@
+{
+  "file": "auth.py",
+  "diff": "@@ -10,2 +10,3 @@\n def login(user_id):\n-    return get_user(user_id)\n+    query = \"SELECT * FROM users WHERE id=\" + user_id\n+    return db.execute(query)\n"
+}

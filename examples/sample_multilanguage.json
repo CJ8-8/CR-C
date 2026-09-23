@@ -1,0 +1,7 @@
+{
+  "files": {
+    "app.py": "import os\n\ndef run(cmd):\n    os.system(cmd)\n",
+    "frontend.js": "const input = getUserInput();\neval(input);\nconsole.log(\"debug\");\n",
+    "types.ts": "const data: any = child_process.exec(cmd);\n"
+  }
+}

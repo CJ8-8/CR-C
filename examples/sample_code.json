@@ -1,0 +1,4 @@
+{
+  "file": "auth.py",
+  "code": "import os\n\ndef login(user_id):\n    print(\"debug\")\n    query = \"SELECT * FROM users WHERE id=\" + user_id\n    return query\n"
+}

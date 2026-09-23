@@ -1,0 +1,11 @@
+{
+  "title": "Add login API",
+  "description": "Adds a login endpoint",
+  "language": "python",
+  "files_changed": 3,
+  "lines_added": 120,
+  "lines_deleted": 20,
+  "tests_passed": true,
+  "security_findings": 1,
+  "changed_code": "query = \"SELECT * FROM users WHERE id=\" + user_id"
+}

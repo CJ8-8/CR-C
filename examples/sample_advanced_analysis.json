@@ -1,0 +1,9 @@
+{
+  "files": {
+    "math_ops.py": "def divide(a, b):\n    if b == 0:\n        return None\n    return a / b\n",
+    "app.py": "from math_ops import divide\n\ndef main():\n    x = 10 / 0\n    items = [1, 2, 3]\n    val = items[10]\n    if x > 5:\n        do_a()\n    elif x > 5:\n        do_b()\n"
+  },
+  "changed_lines": {
+    "app.py": [4, 6, 9]
+  }
+}

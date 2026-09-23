@@ -1,0 +1,6 @@
+{
+  "files": {
+    "sources.py": "def get_input():\n    return input()\n",
+    "runner.py": "from sources import get_input\nimport subprocess\nimport shlex\nimport sqlite3\n\nraw = get_input()\ncmd = raw\nsafe_cmd = shlex.quote(raw)\n\nsubprocess.run(cmd, shell=True)\nsubprocess.run(safe_cmd, shell=True)\n\nquery = f\"SELECT * FROM users WHERE name={raw}\"\ncursor.execute(query)\ncursor.execute(\"SELECT * FROM users WHERE name=?\", (raw,))\n"
+  }
+}

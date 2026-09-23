@@ -1,0 +1,4 @@
+{
+  "file": "app.py",
+  "code": "import sqlite3\n\nuser_id = input()\nquery = \"SELECT * FROM users WHERE id=\" + user_id\nconn = sqlite3.connect('db.sq3')\ncursor = conn.cursor()\ncursor.execute(query)\n\nval = None\nval.strip()\n"
+}

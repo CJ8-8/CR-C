@@ -1,0 +1,4 @@
+{
+  "file": "service.py",
+  "code": "import subprocess\n\ndef run_cmd(cmd, items=[]):\n    print(\"debug\")\n    try:\n        eval(cmd)\n        subprocess.run(cmd, shell=True)\n    except:\n        pass\n"
+}

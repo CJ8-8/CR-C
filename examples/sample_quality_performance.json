@@ -1,0 +1,5 @@
+{
+  "files": {
+    "app.py": "import os\nimport os\nimport re\n\nresult = \"\"\ndef process(items):\n    global result\n    for item in items:\n        pattern = re.compile(r\"x\")\n        result += item\n    return result\n"
+  }
+}

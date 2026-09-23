@@ -1,0 +1,16 @@
+{
+  "files": {
+    "calculator.py": "def divide(a, b):\n    return a / b\n",
+    "test_calculator.py": "from calculator import divide\n\ndef test_divide():\n    assert divide(10, 2) == 5\n\ndef test_divide_by_zero():\n    divide(10, 0)\n"
+  },
+  "changed_lines": {
+    "calculator.py": [2]
+  },
+  "dynamic": {
+    "enabled": true,
+    "run_tests": true,
+    "entrypoints": ["calculator.divide"],
+    "fuzz_targets": ["calculator.divide"],
+    "timeout_seconds": 3.0
+  }
+}

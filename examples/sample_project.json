@@ -1,0 +1,10 @@
+{
+  "files": {
+    "factory.py": "def create():\n    return None\n",
+    "query_builder.py": "def build_query(user_id):\n    return \"SELECT * FROM users WHERE id=\" + user_id\n",
+    "app.py": "from factory import create\nfrom query_builder import build_query\nimport sqlite3\n\ndef main(user_id):\n    res = create()\n    res.strip()\n    q = build_query(user_id)\n    cursor.execute(q)\n"
+  },
+  "changed_lines": {
+    "app.py": [6, 8]
+  }
+}

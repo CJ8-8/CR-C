@@ -1,0 +1,392 @@
+[
+  {
+    "id": "py-sec-eval-001",
+    "language": "python",
+    "category": "SECURITY",
+    "is_positive": true,
+    "files": {
+      "app.py": "def run_user_code(user_input):\n    eval(user_input)\n"
+    },
+    "expected_findings": [
+      {
+        "type": "SECURITY",
+        "severity": "HIGH",
+        "file": "app.py",
+        "start_line": 2,
+        "end_line": 2
+      }
+    ],
+    "description": "Direct eval() call with user input"
+  },
+  {
+    "id": "py-sec-eval-neg-001",
+    "language": "python",
+    "category": "SECURITY",
+    "is_positive": false,
+    "files": {
+      "app.py": "def log_info():\n    message = 'eval(user_input)'\n    print_log(message)\n"
+    },
+    "expected_findings": [],
+    "description": "Safe string literal containing the word eval"
+  },
+  {
+    "id": "py-sec-shell-001",
+    "language": "python",
+    "category": "SECURITY",
+    "is_positive": true,
+    "files": {
+      "app.py": "import subprocess\n\ndef execute_command(cmd):\n    subprocess.run(cmd, shell=True)\n"
+    },
+    "expected_findings": [
+      {
+        "type": "SECURITY",
+        "severity": "HIGH",
+        "file": "app.py",
+        "start_line": 4,
+        "end_line": 4
+      }
+    ],
+    "description": "Unsanitized command execution with shell=True"
+  },
+  {
+    "id": "py-sec-shell-neg-001",
+    "language": "python",
+    "category": "SECURITY",
+    "is_positive": false,
+    "files": {
+      "app.py": "import subprocess, shlex\n\ndef execute_command(cmd):\n    safe_cmd = shlex.quote(cmd)\n    subprocess.run(safe_cmd, shell=True)\n"
+    },
+    "expected_findings": [],
+    "description": "Safe command execution with explicit shlex.quote() sanitization"
+  },
+  {
+    "id": "py-sec-sql-001",
+    "language": "python",
+    "category": "SECURITY",
+    "is_positive": true,
+    "files": {
+      "db.py": "def get_user(user_id):\n    query = 'SELECT * FROM users WHERE id=' + user_id\n    cursor.execute(query)\n"
+    },
+    "expected_findings": [
+      {
+        "type": "SECURITY",
+        "severity": "HIGH",
+        "file": "db.py",
+        "start_line": 2,
+        "end_line": 2
+      },
+      {
+        "type": "SECURITY",
+        "severity": "HIGH",
+        "file": "db.py",
+        "start_line": 3,
+        "end_line": 3
+      }
+    ],
+    "description": "Dynamic SQL string concatenation passed to cursor.execute()"
+  },
+  {
+    "id": "py-sec-sql-neg-001",
+    "language": "python",
+    "category": "SECURITY",
+    "is_positive": false,
+    "files": {
+      "db.py": "def get_user(user_id):\n    query = 'SELECT * FROM users WHERE id=%s'\n    cursor.execute(query, (user_id,))\n"
+    },
+    "expected_findings": [],
+    "description": "Safe parameterized SQL query"
+  },
+  {
+    "id": "py-bug-divzero-001",
+    "language": "python",
+    "category": "BUG",
+    "is_positive": true,
+    "files": {
+      "calc.py": "def compute():\n    x = 10 / 0\n    return x\n"
+    },
+    "expected_findings": [
+      {
+        "type": "BUG",
+        "severity": "HIGH",
+        "file": "calc.py",
+        "start_line": 2,
+        "end_line": 2
+      }
+    ],
+    "description": "Literal division by zero"
+  },
+  {
+    "id": "py-bug-divzero-neg-001",
+    "language": "python",
+    "category": "BUG",
+    "is_positive": false,
+    "files": {
+      "calc.py": "def compute(val):\n    if val == 0:\n        return 0\n    return 10 / val\n"
+    },
+    "expected_findings": [],
+    "description": "Safe division with zero check guard"
+  },
+  {
+    "id": "py-bug-bounds-001",
+    "language": "python",
+    "category": "BUG",
+    "is_positive": true,
+    "files": {
+      "data.py": "def fetch():\n    items = [1, 2, 3]\n    return items[10]\n"
+    },
+    "expected_findings": [
+      {
+        "type": "BUG",
+        "severity": "HIGH",
+        "file": "data.py",
+        "start_line": 3,
+        "end_line": 3
+      }
+    ],
+    "description": "Constant collection index out of bounds"
+  },
+  {
+    "id": "py-bug-bounds-neg-001",
+    "language": "python",
+    "category": "BUG",
+    "is_positive": false,
+    "files": {
+      "data.py": "def fetch():\n    items = [1, 2, 3]\n    return items[1]\n"
+    },
+    "expected_findings": [],
+    "description": "Safe in-bounds constant collection index access"
+  },
+  {
+    "id": "py-bug-none-001",
+    "language": "python",
+    "category": "BUG",
+    "is_positive": true,
+    "files": {
+      "process.py": "def process():\n    val = None\n    val.strip()\n"
+    },
+    "expected_findings": [
+      {
+        "type": "BUG",
+        "severity": "MEDIUM",
+        "file": "process.py",
+        "start_line": 3,
+        "end_line": 3
+      }
+    ],
+    "description": "Definite None dereference"
+  },
+  {
+    "id": "py-bug-none-neg-001",
+    "language": "python",
+    "category": "BUG",
+    "is_positive": false,
+    "files": {
+      "process.py": "def process(val):\n    val = None\n    if val is None:\n        return\n    val.strip()\n"
+    },
+    "expected_findings": [],
+    "description": "Safe None guard with early return"
+  },
+  {
+    "id": "py-bug-dup-if-001",
+    "language": "python",
+    "category": "BUG",
+    "is_positive": true,
+    "files": {
+      "branch.py": "def test(x):\n    if x > 10:\n        do_a()\n    elif x > 10:\n        do_b()\n"
+    },
+    "expected_findings": [
+      {
+        "type": "BUG",
+        "severity": "LOW",
+        "file": "branch.py",
+        "start_line": 4,
+        "end_line": 4
+      }
+    ],
+    "description": "Duplicate branch condition in if-elif chain"
+  },
+  {
+    "id": "py-perf-re-001",
+    "language": "python",
+    "category": "PERFORMANCE",
+    "is_positive": true,
+    "files": {
+      "parse.py": "import re\n\ndef parse_all(items):\n    for item in items:\n        pat = re.compile(r'\\d+')\n        pat.match(item)\n"
+    },
+    "expected_findings": [
+      {
+        "type": "PERFORMANCE",
+        "severity": "LOW",
+        "file": "parse.py",
+        "start_line": 5,
+        "end_line": 5
+      }
+    ],
+    "description": "re.compile() executed repeatedly inside loop"
+  },
+  {
+    "id": "py-perf-re-neg-001",
+    "language": "python",
+    "category": "PERFORMANCE",
+    "is_positive": false,
+    "files": {
+      "parse.py": "import re\n\npat = re.compile(r'\\d+')\ndef parse_all(items):\n    for item in items:\n        pat.match(item)\n"
+    },
+    "expected_findings": [],
+    "description": "re.compile() compiled once outside loop"
+  },
+  {
+    "id": "js-sec-eval-001",
+    "language": "javascript",
+    "category": "SECURITY",
+    "is_positive": true,
+    "files": {
+      "app.js": "function run(code) {\n    eval(code);\n}\n"
+    },
+    "expected_findings": [
+      {
+        "type": "SECURITY",
+        "severity": "HIGH",
+        "file": "app.js",
+        "start_line": 2,
+        "end_line": 2
+      }
+    ],
+    "description": "JavaScript eval() call"
+  },
+  {
+    "id": "js-sec-eval-neg-001",
+    "language": "javascript",
+    "category": "SECURITY",
+    "is_positive": false,
+    "files": {
+      "app.js": "function log() {\n    const str = 'eval is dangerous';\n}\n"
+    },
+    "expected_findings": [],
+    "description": "Safe JavaScript string containing eval"
+  },
+  {
+    "id": "ts-sec-innerhtml-001",
+    "language": "typescript",
+    "category": "SECURITY",
+    "is_positive": true,
+    "files": {
+      "view.ts": "function render(userHtml: string) {\n    const el = document.getElementById('app');\n    el.innerHTML = userHtml;\n}\n"
+    },
+    "expected_findings": [
+      {
+        "type": "SECURITY",
+        "severity": "HIGH",
+        "file": "view.ts",
+        "start_line": 3,
+        "end_line": 3
+      }
+    ],
+    "description": "TypeScript DOM XSS innerHTML assignment"
+  },
+  {
+    "id": "py-sec-secret-001",
+    "language": "python",
+    "category": "SECRETS",
+    "is_positive": true,
+    "files": {
+      "config.py": "AWS_SECRET_KEY = 'AKIAIOSFODNN7EXAMPLE_KEY_STRING_HERE'\n"
+    },
+    "expected_findings": [
+      {
+        "type": "SECRETS",
+        "severity": "HIGH",
+        "file": "config.py",
+        "start_line": 1,
+        "end_line": 1
+      }
+    ],
+    "description": "Hardcoded secret API key string"
+  },
+  {
+    "id": "py-sec-secret-neg-001",
+    "language": "python",
+    "category": "SECRETS",
+    "is_positive": false,
+    "files": {
+      "config.py": "import os\nAWS_SECRET_KEY = os.getenv('AWS_SECRET_KEY')\n"
+    },
+    "expected_findings": [],
+    "description": "Safe environment variable lookup"
+  },
+  {
+    "id": "py-cfg-debug-001",
+    "language": "python",
+    "category": "CONFIGURATION",
+    "is_positive": true,
+    "files": {
+      "settings.py": "DEBUG = True\n"
+    },
+    "expected_findings": [
+      {
+        "type": "CONFIGURATION",
+        "severity": "HIGH",
+        "file": "settings.py",
+        "start_line": 1,
+        "end_line": 1
+      }
+    ],
+    "description": "Insecure DEBUG = True configuration"
+  },
+  {
+    "id": "py-cfg-debug-neg-001",
+    "language": "python",
+    "category": "CONFIGURATION",
+    "is_positive": false,
+    "files": {
+      "settings.py": "DEBUG = False\n"
+    },
+    "expected_findings": [],
+    "description": "Secure DEBUG = False configuration"
+  },
+  {
+    "id": "py-crossfile-sql-001",
+    "language": "python",
+    "category": "SECURITY",
+    "is_positive": true,
+    "files": {
+      "builder.py": "def build_query(user_id):\n    return 'SELECT * FROM users WHERE id=' + user_id\n",
+      "app.py": "from builder import build_query\ndef run(user_id):\n    q = build_query(user_id)\n    cursor.execute(q)\n"
+    },
+    "expected_findings": [
+      {
+        "type": "SECURITY",
+        "severity": "HIGH",
+        "file": "app.py",
+        "start_line": 4,
+        "end_line": 4
+      }
+    ],
+    "description": "Cross-file dynamic SQL query flow passed to cursor.execute()"
+  },
+  {
+    "id": "py-dynamic-test-001",
+    "language": "python",
+    "category": "BUG",
+    "is_positive": true,
+    "files": {
+      "calc.py": "def add(a, b):\n    return a / 0\n",
+      "test_calc.py": "from calc import add\ndef test_add():\n    assert add(2, 2) == 4\n"
+    },
+    "dynamic_options": {
+      "enabled": true,
+      "run_tests": true,
+      "timeout_seconds": 3.0
+    },
+    "expected_findings": [
+      {
+        "type": "BUG",
+        "severity": "HIGH",
+        "file": "calc.py",
+        "start_line": 2,
+        "end_line": 2
+      }
+    ],
+    "description": "Dynamic execution test failure capturing ZeroDivisionError"
+  }
+]
