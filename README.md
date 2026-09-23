@@ -1,12 +1,12 @@
-# CodeJev - Phase 1 to Phase 14 Engine
+# CR-C - Phase 1 to Phase 14 Engine
 
-Welcome to **CodeJev**, an automated multi-language code analysis engine for detecting and localizing software code problems in Pull Request diffs, Python ASTs, JavaScript/TypeScript ESTrees, multi-file projects, Taint Analysis, Dependencies, Secrets, Configuration scanning, Bug detection, Performance analysis, Dynamic Signals, and Benchmark Evaluation.
+Welcome to **CR-C**, an automated multi-language code analysis engine for detecting and localizing software code problems in Pull Request diffs, Python ASTs, JavaScript/TypeScript ESTrees, multi-file projects, Taint Analysis, Dependencies, Secrets, Configuration scanning, Bug detection, Performance analysis, Dynamic Signals, and Benchmark Evaluation.
 
 ---
 
-## 1. What is CodeJev?
+## 1. What is CR-C?
 
-**CodeJev** is designed to inspect code modifications (e.g. Git Pull Requests) and pinpoint **EXACTLY WHERE** problems are located (filename and line numbers) along with their flaw `type` and `severity`.
+**CR-C** is designed to inspect code modifications (e.g. Git Pull Requests) and pinpoint **EXACTLY WHERE** problems are located (filename and line numbers) along with their flaw `type` and `severity`.
 
 - **Phase 1 (Legacy Experiment)**: PR Risk Prototype (`POST /review`) – High-level gatekeeping (`PASS`, `REVIEW`, `BLOCK`).
 - **Phase 2 (Code Analysis)**: Full file issue detection (`POST /analyze`) – Line-level flaw localization in full file strings.
