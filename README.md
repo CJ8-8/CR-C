@@ -165,7 +165,7 @@ codejev/
 ```
 
 > [!NOTE]
-> **Deterministic Evaluation**: Phase 14 measures CodeJev against labeled ground truth reproducibly without non-deterministic LLM scoring or network calls.
+> **Deterministic Evaluation**: Phase 14 measures CR-C against labeled ground truth reproducibly without non-deterministic LLM scoring or network calls.
 
 ---
 
